@@ -8,7 +8,7 @@ def generate_bot_responses(message, session):
 
     if current_question_id is None:
         bot_responses.append(BOT_WELCOME_MESSAGE)
-        session["current_question_id"] = 0
+        session["current_question_id"] = -1
         session.save()
     else:
         # Record the user's answer and handle errors
@@ -45,8 +45,7 @@ def record_current_answer(answer, current_question_id, session):
         return False, "No question to answer."
 
     session["answers"] = session.get("answers", {})
-    session["answers"][current_question_id] = answer
-
+    session["answers"][str(current_question_id)] = answer
     return True, ""
 
 
